@@ -9,15 +9,15 @@ Tested on linux Debian 9 with Python 3.5.3.
 
 #### Generic
 
-+ [ ] Numeric (d6, d10, d20...)
++ [X] Numeric (d6, d10, d20...)
 
 #### SW
 
 + [X] Ability / Difficulty
-+ [ ] Challenge / Proficiency
++ [X] Challenge / Proficiency
 + [X] Boost / Setback
 + [X] Force
-+ [ ] Dices results
++ [X] Dices results
 
 ### Network
 

@@ -36,29 +36,20 @@ class DicePool:
     throw all the dices and calculate the total
     """
     def throw(self):
-        self.__total["numeric"] = 0
-        self.__total["ability"] = {}
-        self.__total["ability"]["advantage"] = 0
-        self.__total["ability"]["success"] = 0
-        self.__total["difficulty"] = {}
-        self.__total["difficulty"]["failure"] = 0
-        self.__total["difficulty"]["threat"] = 0
-        self.__total["force"] = {}
-        self.__total["force"]['light'] = 0
-        self.__total["force"]['dark'] = 0
         for dice in self.__dices:
             dice.throw()
-            (res_type, res_dict) = dice.get_result()
-            if res_type == "numeric":
-                self.__total["numeric"] += res_dict
-            elif res_type == "ability":
-                self.__total["ability"]["advantage"] += res_dict["advantage"]
-                self.__total["ability"]["success"] += res_dict["success"]
-            elif res_type == "difficulty":
-                self.__total["difficulty"]["failure"] += res_dict["failure"]
-                self.__total["difficulty"]["threat"] += res_dict["threat"]
-            elif res_type == "force":
-                self.__total["force"]['light'] += res_dict["light"]
-                self.__total["force"]['dark'] += res_dict["dark"]
-            else:
-                print("Error: Unhandle dice: " + res_type + ": " + res_dict)
+            self.add_dice_result_to_total(dice)
+
+    def add_dice_result_to_total(self, dice):
+        if not dice.get_name() in self.__total:  # first time we throw this type of dice
+            print("Adding %s type dice" % (dice.get_name()))
+            self.add_dice_type_to_total(dice)
+        res_dict = dice.get_result()
+
+        for side_name in dice.get_result().keys():
+            self.__total[dice.get_name()][side_name] += res_dict[side_name]
+
+    def add_dice_type_to_total(self, dice):
+        self.__total[dice.get_name()] = {}
+        for side_name in dice.get_result().keys():
+            self.__total[dice.get_name()][side_name] = 0

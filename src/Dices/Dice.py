@@ -8,6 +8,7 @@ class Dice:
 
     def __init__(self):
         self.__result = None
+        self.__name = None
 
     def __str__(self):
         if self.__result is None:
@@ -23,3 +24,6 @@ class Dice:
 
     def throw(self):
         return None
+
+    def get_name(self):
+        return self.__name

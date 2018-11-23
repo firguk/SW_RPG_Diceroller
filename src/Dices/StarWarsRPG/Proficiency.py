@@ -11,6 +11,7 @@ class Challenge(Dice):
     def __init__(self):
         self.__nb_side = 12
         self.__name = "Proficiency"
+        self.__type = "Positive"
         self.__sides = [
             {"failure": 0, "threat": 0, "despair": 0},
             {"failure": 1, "threat": 0, "despair": 0},
@@ -37,11 +38,14 @@ class Challenge(Dice):
     def get_result(self):
         return self.__result
 
+    def get_type(self):
+        return self.__type
+
+    def get_name(self):
+        return self.__name
+
     """
     throw the dice
     """
     def throw(self):
         self.__result = self.__sides[random.randint(0, self.__nb_side - 1)]
-
-    def get_name(self):
-        return self.__name

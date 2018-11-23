@@ -9,6 +9,7 @@ class Dice:
     def __init__(self):
         self.__result = None
         self.__name = None
+        self.__type = None
 
     def __str__(self):
         if self.__result is None:
@@ -20,7 +21,10 @@ class Dice:
     :return (dice_type, dice_results)
     """
     def get_result(self):
-        return None, self.__result
+        return self.__result
+
+    def get_type(self):
+        return self.__type
 
     def throw(self):
         return None

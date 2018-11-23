@@ -11,13 +11,14 @@ class Boost(Dice):
     def __init__(self):
         self.__nb_side = 6
         self.__name = "Boost"
+        self.__type = "Positive"
         self.__sides = [
-            {"advantage": 0, "success": 0},
-            {"advantage": 1, "success": 1},
-            {"advantage": 0, "success": 0},
-            {"advantage": 2, "success": 0},
-            {"advantage": 0, "success": 1},
-            {"advantage": 1, "success": 0}
+            {"advantage": 0, "success": 0, "despair": 0},
+            {"advantage": 1, "success": 1, "despair": 0},
+            {"advantage": 0, "success": 0, "despair": 0},
+            {"advantage": 2, "success": 0, "despair": 0},
+            {"advantage": 0, "success": 1, "despair": 0},
+            {"advantage": 1, "success": 0, "despair": 0}
         ]
         self.__result = {}
 
@@ -31,11 +32,15 @@ class Boost(Dice):
     def get_result(self):
         return self.__result
 
+    def get_type(self):
+        return self.__type
+
+    def get_name(self):
+        return self.__name
+
     """
     throw the dice
     """
     def throw(self):
         self.__result = self.__sides[random.randint(0, self.__nb_side - 1)]
 
-    def get_name(self):
-        return self.__name

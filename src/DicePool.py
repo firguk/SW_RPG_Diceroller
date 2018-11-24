@@ -71,43 +71,98 @@ class DicePool:
 
     def logic(self):
         result = {}
-        # print(self.__total)
-        if "Positive" in self.__total:
-            if "Negative" in self.__total:
+        print("raw results = ", self.__total)
 
-                # triumph / despair
-                if self.__total["Positive"]["triumph"] > self.__total["Negative"]["despair"]:
-                    if "Positive" not in result:
-                        result["Positive"] = {}
-                    result["Positive"]["triumph"] = self.__total["Positive"]["triumph"] - \
-                                                    self.__total["Negative"]["despair"]
-                if self.__total["Positive"]["triumph"] < self.__total["Negative"]["despair"]:
-                    if "Negative" not in result:
-                        result["Negative"] = {}
-                    result["Negative"]["threat"] = self.__total["Negative"]["despair"] - \
-                                                   self.__total["Positive"]["triumph"]
+        if "numeric" in self.__total:
+            result["numeric"] = self.__total["numeric"]["numeric"]
 
-                # success / failure
-                if self.__total["Positive"]["success"] > self.__total["Negative"]["failure"]:  # TODO: check rules
-                    if "Positive" not in result:
-                        result["Positive"] = {}
-                    result["Positive"]["success"] = self.__total["Positive"]["success"] - \
-                                                    self.__total["Negative"]["failure"]
-                if self.__total["Positive"]["success"] < self.__total["Negative"]["failure"]:
-                    if "Negative" not in result:
-                        result["Negative"] = {}
-                    result["Negative"]["failure"] = self.__total["Negative"]["failure"] - \
-                                                    self.__total["Positive"]["success"]
-
-                # advantage / threat
-                if self.__total["Positive"]["advantage"] > self.__total["Negative"]["threat"]:  # TODO: check rules
-                    if "Positive" not in result:
-                        result["Positive"] = {}
-                    result["Positive"]["advantage"] = self.__total["Positive"]["advantage"] - \
-                                                      self.__total["Negative"]["threat"]
-                if self.__total["Positive"]["advantage"] < self.__total["Negative"]["threat"]:
-                    if "Negative" not in result:
-                        result["Negative"] = {}
-                    result["Negative"]["threat"] = self.__total["Negative"]["threat"] - \
-                                                   self.__total["Positive"]["advantage"]
+        result = self.logic_sw(result)
         return result
+
+    # TODO: reformat using functions
+    def logic_sw(self, result):
+        result["SW"] = {}
+        if "Positive" in self.__total and "Negative" in self.__total:
+
+            # triumph / despair
+            if self.__total["Positive"]["triumph"] > self.__total["Negative"]["despair"]:
+                if "Positive" not in result["SW"]:
+                    result["SW"]["positive"] = {}
+                result["SW"]["positive"]["triumph"] = self.__total["Positive"]["triumph"] - \
+                                                      self.__total["Negative"]["despair"]
+            if self.__total["Positive"]["triumph"] < self.__total["Negative"]["despair"]:
+                if "Negative" not in result["SW"]:
+                    result["SW"]["negative"] = {}
+                result["SW"]["negative"]["threat"] = self.__total["Negative"]["despair"] - \
+                                                     self.__total["Positive"]["triumph"]
+
+            # success / failure
+            if self.__total["Positive"]["success"] > self.__total["Negative"]["failure"]:  # TODO: check rules
+                if "Positive" not in result["SW"]:
+                    result["SW"]["positive"] = {}
+                result["SW"]["positive"]["success"] = self.__total["Positive"]["success"] - \
+                                                      self.__total["Negative"]["failure"]
+            if self.__total["Positive"]["success"] < self.__total["Negative"]["failure"]:
+                if "Negative" not in result:
+                    result["SW"]["negative"] = {}
+                result["SW"]["negative"]["failure"] = self.__total["Negative"]["failure"] - \
+                                                      self.__total["Positive"]["success"]
+
+            # advantage / threat
+            if self.__total["Positive"]["advantage"] > self.__total["Negative"]["threat"]:  # TODO: check rules
+                if "Positive" not in result:
+                    result["SW"]["positive"] = {}
+                result["SW"]["positive"]["advantage"] = self.__total["Positive"]["advantage"] - \
+                                                        self.__total["Negative"]["threat"]
+            if self.__total["Positive"]["advantage"] < self.__total["Negative"]["threat"]:
+                if "Negative" not in result:
+                    result["SW"]["negative"] = {}
+                result["SW"]["negative"]["threat"] = self.__total["Negative"]["threat"] - \
+                                                     self.__total["Positive"]["advantage"]
+
+        elif "Positive" in self.__total:
+            # triumph
+            if self.__total["Positive"]["triumph"] > 0:
+                if "Positive" not in result["SW"]:
+                    result["SW"]["positive"] = {}
+                result["SW"]["positive"]["triumph"] = self.__total["Positive"]["triumph"]
+
+            # success
+            if self.__total["Positive"]["success"] > 0:
+                if "Positive" not in result["SW"]:
+                    result["SW"]["success"] = {}
+                result["SW"]["positive"]["success"] = self.__total["Positive"]["success"]
+
+            # advantage
+            if self.__total["Positive"]["advantage"] > 0:
+                if "Positive" not in result["SW"]:
+                    result["SW"]["advantage"] = {}
+                result["SW"]["positive"]["advantage"] = self.__total["Positive"]["advantage"]
+
+        elif "Negative" in self.__total:
+            # despair
+            if self.__total["Negative"]["despair"] > 0:
+                if "Negative" not in result["SW"]:
+                    result["SW"]["negative"] = {}
+                result["SW"]["negative"]["despair"] = self.__total["Negative"]["despair"]
+
+            # failure
+            if self.__total["Negative"]["failure"] > 0:
+                if "Negative" not in result["SW"]:
+                    result["SW"]["negative"] = {}
+                result["SW"]["negative"]["failure"] = self.__total["Negative"]["failure"]
+
+            # threat
+            if self.__total["Negative"]["threat"] > 0:
+                if "Negative" not in result["SW"]:
+                    result["SW"]["negative"] = {}
+                result["SW"]["negative"]["threat"] = self.__total["Negative"]["threat"]
+
+        if "Force" in self.__total:
+            result["SW"]["force"] = {}
+            if self.__total["Force"]["dark"] > 0:
+                result["SW"]["force"]["dark"] = self.__total["Force"]["dark"]
+            if self.__total["Force"]["light"] > 0:
+                result["SW"]["force"]["light"] = self.__total["Force"]["light"]
+        return result
+

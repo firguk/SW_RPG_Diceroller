@@ -3,7 +3,7 @@ import random
 from src.Dices.Dice import Dice
 
 
-class Challenge(Dice):
+class Proficiency(Dice):
     """
     A dice to throw
     """
@@ -13,18 +13,18 @@ class Challenge(Dice):
         self.__name = "Proficiency"
         self.__type = "Positive"
         self.__sides = [
-            {"failure": 0, "threat": 0, "despair": 0},
-            {"failure": 1, "threat": 0, "despair": 0},
-            {"failure": 0, "threat": 1, "despair": 0},
-            {"failure": 2, "threat": 0, "despair": 0},
-            {"failure": 1, "threat": 1, "despair": 0},
-            {"failure": 0, "threat": 2, "despair": 0},
-            {"failure": 1, "threat": 0, "despair": 0},
-            {"failure": 0, "threat": 2, "despair": 0},
-            {"failure": 1, "threat": 1, "despair": 0},
-            {"failure": 2, "threat": 0, "despair": 0},
-            {"failure": 0, "threat": 1, "despair": 0},
-            {"failure": 0, "threat": 0, "despair": 1}
+            {"advantage": 0, "success": 0, "triumph": 0},
+            {"advantage": 1, "success": 0, "triumph": 0},
+            {"advantage": 0, "success": 1, "triumph": 0},
+            {"advantage": 2, "success": 0, "triumph": 0},
+            {"advantage": 1, "success": 1, "triumph": 0},
+            {"advantage": 0, "success": 2, "triumph": 0},
+            {"advantage": 1, "success": 0, "triumph": 0},
+            {"advantage": 0, "success": 2, "triumph": 0},
+            {"advantage": 1, "success": 1, "triumph": 0},
+            {"advantage": 2, "success": 0, "triumph": 0},
+            {"advantage": 0, "success": 1, "triumph": 0},
+            {"advantage": 0, "success": 0, "triumph": 1}
         ]
         self.__result = {}
 
@@ -32,8 +32,9 @@ class Challenge(Dice):
         if self.__result is None:
             return "The dice has not be thrown"
         return self.__name + " dice\tresult=" + "\n" + \
-               "\t\tfailure:" + str(self.__result["failure"]) + "\n" + \
-               "\t\tthreat:" + str(self.__result["threat"])
+               "\t\tadvantage:" + str(self.__result["advantage"]) + "\n" + \
+               "\t\tsuccess:" + str(self.__result["success"]) + "\n" + \
+               "\t\ttriumph:" + str(self.__result["triumph"])
 
     def get_result(self):
         return self.__result

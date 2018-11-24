@@ -13,12 +13,12 @@ class Boost(Dice):
         self.__name = "Boost"
         self.__type = "Positive"
         self.__sides = [
-            {"advantage": 0, "success": 0, "despair": 0},
-            {"advantage": 1, "success": 1, "despair": 0},
-            {"advantage": 0, "success": 0, "despair": 0},
-            {"advantage": 2, "success": 0, "despair": 0},
-            {"advantage": 0, "success": 1, "despair": 0},
-            {"advantage": 1, "success": 0, "despair": 0}
+            {"advantage": 0, "success": 0, "triumph": 0},
+            {"advantage": 1, "success": 1, "triumph": 0},
+            {"advantage": 0, "success": 0, "triumph": 0},
+            {"advantage": 2, "success": 0, "triumph": 0},
+            {"advantage": 0, "success": 1, "triumph": 0},
+            {"advantage": 1, "success": 0, "triumph": 0}
         ]
         self.__result = {}
 

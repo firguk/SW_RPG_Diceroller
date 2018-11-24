@@ -40,11 +40,11 @@ class DicePool:
             # print("Throwing %s %s dice" % (dice.get_type(), dice.get_name()))
             dice.throw()
             self.add_dice_result_to_total(dice)
-        self.logic()
+        return self.logic()
 
     def add_dice_result_to_total(self, dice):
         if not dice.get_type() in self.__total:  # first time we throw this type of dice
-            print("Adding %s type dice for %s dice" % (dice.get_type(), dice.get_name()))
+            # print("Adding %s type dice for %s dice" % (dice.get_type(), dice.get_name()))
             self.add_dice_type_to_total(dice)
         res_dict = dice.get_result()
 
@@ -56,17 +56,58 @@ class DicePool:
         for side_name in dice.get_result().keys():
             self.__total[dice.get_type()][side_name] = 0
 
+    """
+    subtract dice sides and return a dict containing the result of the subsraction
+    :type side_1: dict
+    :type side_2: dict
+    """
+    def subtract_sides(self, side_1, side_2):
+        if side_1 in self.__total:
+            if side_2 in self.__total:
+                if side_1 >= side_2:  # TODO: check rules
+                    return side_1 - side_2
+                else:
+                    return side_2 - side_2
+
     def logic(self):
+        result = {}
+        # print(self.__total)
         if "Positive" in self.__total:
             if "Negative" in self.__total:
-                if self.__total["Positive"]["success"] >= self.__total["Negative"]["failure"]:  # TODO: check rules
-                    print("The throw is a success (%d) " %
-                          (self.__total["Positive"]["success"] - self.__total["Negative"]["failure"]))
-                else:
-                    print("The throw is a failure (%d) " %
-                          (self.__total["Positive"]["success"] - self.__total["Negative"]["failure"]))
-                if self.__total["Positive"]["advantage"] >= self.__total["Negative"]["threat"]:  # TODO: check rules
-                    print("with %d advantage" % (self.__total["Positive"]["advantage"] - self.__total["Negative"]["threat"]))
-                else:
-                    print("with %d threat" % (self.__total["Positive"]["advantage"] - self.__total["Negative"]["threat"]))
 
+                # triumph / despair
+                if self.__total["Positive"]["triumph"] > self.__total["Negative"]["despair"]:
+                    if "Positive" not in result:
+                        result["Positive"] = {}
+                    result["Positive"]["triumph"] = self.__total["Positive"]["triumph"] - \
+                                                    self.__total["Negative"]["despair"]
+                if self.__total["Positive"]["triumph"] < self.__total["Negative"]["despair"]:
+                    if "Negative" not in result:
+                        result["Negative"] = {}
+                    result["Negative"]["threat"] = self.__total["Negative"]["despair"] - \
+                                                   self.__total["Positive"]["triumph"]
+
+                # success / failure
+                if self.__total["Positive"]["success"] > self.__total["Negative"]["failure"]:  # TODO: check rules
+                    if "Positive" not in result:
+                        result["Positive"] = {}
+                    result["Positive"]["success"] = self.__total["Positive"]["success"] - \
+                                                    self.__total["Negative"]["failure"]
+                if self.__total["Positive"]["success"] < self.__total["Negative"]["failure"]:
+                    if "Negative" not in result:
+                        result["Negative"] = {}
+                    result["Negative"]["failure"] = self.__total["Negative"]["failure"] - \
+                                                    self.__total["Positive"]["success"]
+
+                # advantage / threat
+                if self.__total["Positive"]["advantage"] > self.__total["Negative"]["threat"]:  # TODO: check rules
+                    if "Positive" not in result:
+                        result["Positive"] = {}
+                    result["Positive"]["advantage"] = self.__total["Positive"]["advantage"] - \
+                                                      self.__total["Negative"]["threat"]
+                if self.__total["Positive"]["advantage"] < self.__total["Negative"]["threat"]:
+                    if "Negative" not in result:
+                        result["Negative"] = {}
+                    result["Negative"]["threat"] = self.__total["Negative"]["threat"] - \
+                                                   self.__total["Positive"]["advantage"]
+        return result

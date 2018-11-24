@@ -3,62 +3,21 @@
 Dice roller for FFG Star Wars RPG game
 Tested on linux Debian 9 with Python 3.5.3.
 
-## TODO
+## How to run
 
-### Dices
+## TODO list
 
-#### Generic
-
-+ [X] Numeric (d6, d10, d20...)
-
-#### SW
-
-+ [X] Ability / Difficulty
-+ [X] Challenge / Proficiency
-+ [X] Boost / Setback
-+ [X] Force
-+ [X] Dices results
-
-### Network
-
-+ [ ] UDP client
-+ [ ] UDP server
-+ [ ] Lobby
-
-### Misc
-
-+ [ ] Users
-+ [ ] Lobby
-+ [ ] Unit test (sider ?)
++ [ ] UDP client/server
++ [ ] users logic
++ [ ] Unit test
 + [ ] GUI
 
 ## Coding rules
 
 [PEP-8](https://www.python.org/dev/peps/pep-0008/) compliant
 
-## Quick specs
+## Code quality check
 
-```
-                                     +------+
-                                     | Game +<------+
-      +---------------+              +-+-+--+       |
-      | Communication |                | ^          |
-      +---------------+   +-------+    | |          |
-                 +------> | Lobby | <--+ |          |
-                          +-------+      |          |
-                                         |          |
-                                         |          |
-                                         |    +-----+----+
-          +---------+                    |    | DicePool |
-          | Player  |                    |    +----------+
-          ++--------+--------------------+         ^---+
-           ^    ^----+                                 |
-+----------+-+       |                                 +-------+
-| GameMaster |       |                                 ++ Dice |
-+------------+  +----+-------+                          +------+
-                | Adventurer |
-                +------------+
-```
-
-> Very subject to change
->> Lobby and game might be merged
+The code quality can be checked by using `pylint3` with a [script](./run_code_analysis.sh) to run.
+The script generate a [report](code_analysis_report.txt) to monitor quality code through development.
+The script should be run before pushing to Github, new warning or code flaws should'nt be add.

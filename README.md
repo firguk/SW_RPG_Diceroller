@@ -5,6 +5,12 @@ Tested on linux Debian 9 with Python 3.5.3.
 
 ## How to run
 
+```commandline
+cd src
+export PYTHONPATH=$PYTHONPATH:`pwd`
+python3 ./src/Game.py
+```
+
 ## TODO list
 
 + [ ] UDP client/server
